@@ -1,0 +1,111 @@
+[Telegram]
+# Application Name
+Namespace = "MyApp"
+# Secret Token for OTP
+Secret = "mySecretToken"
+# Telegram Bot Key Input Here
+BotKey = "Telegram Bot Key"
+# Is it possible to change gender? true or false
+ChangeGenderEnabled = false
+
+[WhiteList]
+# white email domain enabled
+WhiteDomainEnabled = true
+# white email domain list
+WhiteDomain = "@qq.com,@hotmail.com"
+# white email list enabled , email list read from db
+WhiteEmailEnabled = true
+
+# Bot Program DB Connect Info
+[MysqlDB]
+Host = "127.0.0.1"
+Port = 3306
+Username = "root"
+Password = "root"
+DBName = "strangerbot"
+# The following configuration can be left unchanged
+Charset = "utf8"
+MaxOpenConns = 1000
+MaxIdleConns = 1000
+ConnMaxLifetime = 10
+
+# OTP Redis Conf
+[RedisConf]
+Host = "127.0.0.1"
+Port = "6379"
+Username = ""
+Password = ""
+MaxActive = 100
+MaxIdle = 10
+TimeoutSeconds = 10
+KeyPrefix = "OTP"
+
+[OTPConf]
+# otp time to live seconds
+OTPTTL = 300
+# otp max attempts
+OTPMaxAttempts = 500
+# otp len
+OTPMaxLen = 6
+
+[EmailOTP]
+# email subject
+Subject = "MyApp Email verification"
+# email send template
+Template = "static/smtp.tpl"
+# email template type default:html
+TemplateType = "html"
+# email smtp config
+Config = '''
+    {
+        "Host": "smtp.sendgrid.net",
+        "Port": 25,
+        "AuthProtocol": "",
+        "AuthProtocol": "cram",
+        "User": "smtp-user",
+        "Password": "smtp-password",
+        "FromEmail": "OTP verification <yoursite@yoursite.com>",
+        "MaxConns": 10,
+        "Sendtimeout": 5
+    }
+'''
+
+[VerifyProfileConf]
+# profile question id
+ProfileQuestionId = 8
+# verify option id
+VerifyOptionId = 27
+
+[VerifyMatchingConf]
+# matching verify question id
+MatchingQuestionId = 0
+# verified option id
+VerifiedOptionId = 0
+# unverified option id
+UnverifiedOptionId = 0
+# anything option id
+AnyOptionId = 0
+
+[FemaleMatchRateLimit]
+# female option id
+OptionId = 2
+# rate limit endabled
+RateLimitEnabled = true
+# rate limit unit only support "day"
+RateLimitUnit = "day"
+# rate limit unit period, don't change this value.
+RateLimitUnitPeriod = 7
+# match per rate
+MatchPerRate = 2
+
+[MaleMatchRateLimit]
+# male option id
+OptionId = 3
+# rate limit endabled
+RateLimitEnabled = true
+# rate limit unit only support "day"
+RateLimitUnit = "day"
+# rate limit unit period, don't change this value.
+RateLimitUnitPeriod = 7
+# match per rate
+MatchPerRate = 2

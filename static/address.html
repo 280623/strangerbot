@@ -1,0 +1,34 @@
+{{ define "index" }}
+    {{ template "header" .}}
+    <h1>{{ .ChannelName }} verification</h1>
+    <p>
+        {{ if .OTP.AddressDesc }}
+            {{ .OTP.AddressDesc }}
+        {{ end }}
+    </p>
+    <form method="post" action="" class="form" id="form">
+        <div>
+            <input type="hidden" name="namespace" value="{{ .OTP.Namespace }}" />
+            <input type="hidden" name="id" value="{{ .OTP.ID }}" />
+            <input type="hidden" name="action" class="action" value="set_address" />
+            <p>
+                <input autofocus placeholder="{{ .AddressName }}" maxlength="{{ .MaxAddressLen }}" type="text" name="to" value="" class="to" />
+            </p>
+            <p>
+                <button type="submit" class="submit-button"><span class="label">Continue</span> <span class="spinner"></span></button>
+            </p>
+
+            {{ if .Message }}
+                <p class="error">{{ .Message }}</p>
+            {{ end }}
+        </div>
+    </form>
+    <script>
+        (function() {
+            document.querySelector(".form").onsubmit = function() {
+                document.querySelector(".form .submit-button").setAttribute("disabled", true);
+            };
+        })();
+    </script>
+    {{ template "footer" .}}
+{{ end }}

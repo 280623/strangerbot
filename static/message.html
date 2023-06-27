@@ -1,0 +1,17 @@
+{{ define "message" }}
+    {{ template "header" .}}
+    <h1>{{ .Title }}</h1>
+    <p>
+        {{ .Description }}
+    </p>
+    
+    {{ if .Closed }}
+        <script>
+            (function() {
+                this.parent.postMessage({ "namespace": {{ .OTP.Namespace }}, "id": {{ .OTP.ID }} }, "*");
+            })();
+        </script>
+    {{ end }}
+
+    {{ template "footer" .}}    
+{{ end }}

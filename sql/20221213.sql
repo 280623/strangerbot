@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD COLUMN `member_level` int(10) unsigned NOT NULL DEFAULT '0' COMMENT 'member level';
