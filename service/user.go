@@ -146,7 +146,7 @@ func ServiceGlobalMatch(ctx context.Context) ([]*model.MatchUserData, error) {
 			ChatId:         u.ChatID,
 			User:           users[i],
 			MatchChatId:    0,
-			VerifyOptionId: model.UserQuestionDataList(userQuestionData).GetFirstOptionIdByQuestionId(vars.MatchingQuestionId),
+			VerifyOptionId: userData.GetFirstOptionIdByQuestionId(vars.MatchingQuestionId),
 		}
 
 		profileQuestions := make(map[int64]*model.ProfileQuestion)
