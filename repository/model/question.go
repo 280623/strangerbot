@@ -95,6 +95,31 @@ func (q Questions) GetMatchingQuestion() []*Question {
 	return rs
 }
 
+func (q Questions) GetProfileQuestionExclude(excludeQuestion []int64) []*Question {
+
+	rs := make([]*Question, 0, len(q))
+	for i, item := range q {
+
+		found := false
+		for _, eid := range excludeQuestion {
+			if q[i].ID == eid {
+				found = true
+				break
+			}
+		}
+
+		if found {
+			continue
+		}
+
+		if item.SceneType == SCENE_TYPE_PROFILE {
+			rs = append(rs, q[i])
+		}
+	}
+
+	return rs
+}
+
 func (q Questions) GetMappingQuestion(matchingQuestion []*Question) []*Question {
 
 	rs := make([]*Question, 0, len(q))

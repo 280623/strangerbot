@@ -84,13 +84,30 @@ func matchUsers() {
 			continue
 		}
 
+
 		// user and matched user profile
-		profileQuestion := model.Questions(questions).GetProfileQuestion()
+		profileQuestion := model.Questions(questions).GetProfileQuestionExclude([]int64{vars.VerifyProfileQuestionId})
 		profileOptions := model.Options(options).GetQuestionOptions(ctx, profileQuestion)
+
 		userProfile := model.UserQuestionDataList(userQuestionData).GetUserQuestionDataByOptions(ctx, profileOptions)
 		matchedUserProfile := model.UserQuestionDataList(matchedUserQuestionData).GetUserQuestionDataByOptions(ctx, profileOptions)
-		userProfileStr := strings.Join(profileOptions.GetOptionsByIds(userProfile.GetOptionIds()), ",")
-		matchedUserProfileStr := strings.Join(profileOptions.GetOptionsByIds(matchedUserProfile.GetOptionIds()), ",")
+
+		userProfileStrArr := profileOptions.GetOptionsByIds(userProfile.GetOptionIds())
+		if item.User.IsVerify {
+			userProfileStrArr = append([]string{"Verified Student"}, userProfileStrArr...)
+		} else {
+			userProfileStrArr = append([]string{"Not a Student"}, userProfileStrArr...)
+		}
+		userProfileStr := strings.Join(userProfileStrArr, ",")
+
+		matchedUserProfileStrArr := profileOptions.GetOptionsByIds(matchedUserProfile.GetOptionIds())
+		if item.MatchMatchUserData.User.IsVerify {
+			matchedUserProfileStrArr = append([]string{"Verified Student"}, matchedUserProfileStrArr...)
+		} else {
+			matchedUserProfileStrArr = append([]string{"Not a Student"}, matchedUserProfileStrArr...)
+		}
+
+		matchedUserProfileStr := strings.Join(matchedUserProfileStrArr, ",")
 
 		// user and matched user goals
 		var userGoals, matchedUserGoals string
@@ -104,7 +121,6 @@ func matchUsers() {
 		}
 
 		sendMatchMessage(item.User.ChatID, item.MatchMatchUserData.User.ChatID, userProfileStr, userGoals, matchedUserProfileStr, matchedUserGoals)
-
 	}
 
 }
